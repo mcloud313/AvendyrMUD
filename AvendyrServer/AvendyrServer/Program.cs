@@ -15,6 +15,8 @@ class Program
 
         var server = new TcpListener(localAddr, port);
 
+        var sessions = new Dictionary<TcpClient, PlayerSession>();
+
         server.Start();
 
         Console.WriteLine("Waiting for a connection...");
@@ -23,17 +25,20 @@ class Program
         {
             var client = await server.AcceptTcpClientAsync();
 
-            // Pass off to a separate method so we can await a new client immediately.
-            HandleClientAsync(client);
+            //When a new client connects, create a new session and add it to the sessions dictionary
+            var session = new PlayerSession(client);
+            sessions[client] = session;
+
+            HandleClientAsync(session, sessions);
         }
     }
 
-    static async void HandleClientAsync(TcpClient client)
+    static async void HandleClientAsync(PlayerSession session, Dictionary<TcpClient, PlayerSession> sessions)
     {
         var bytes = new byte[256];
         Console.WriteLine("Connected");
 
-        var stream = client.GetStream();
+        var stream = session.Client.GetStream();
 
         int i;
 
@@ -46,12 +51,12 @@ class Program
 
 
             string commandName = data.Split(' ')[0].ToLower(); //First word is the command name 
-            string argument = string.Join(' ', data.Split(' ').Skip(i)); //Rest of the string is the argument
+            string argument = string.Join(' ', data.Split(' ').Skip(1)); //Rest of the string is the argument
 
             var commandRegistry = new CommandRegistry();
             if (commandRegistry.Commands.TryGetValue(commandName, out var commandHandler)) 
             {
-                await commandHandler.ExecuteAsync(argument, client);
+                await commandHandler.ExecuteAsync(argument, session);
             } else
             {
                 // Handle unknown command.
@@ -66,7 +71,9 @@ class Program
             await stream.WriteAsync(msg, 0, msg.Length);
             Console.WriteLine($"Sent: {data}");
         }
+        //When the client disconnects, remove the session
+        sessions.Remove(session.Client);
 
-        client.Close();
+        session.Client.Close();
     }
 }

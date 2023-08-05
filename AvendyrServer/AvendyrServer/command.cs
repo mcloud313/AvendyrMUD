@@ -11,14 +11,14 @@ namespace AvendyrServer
     public interface ICommand
     {
         string Name { get; }
-        Task ExecuteAsync(string argument, TcpClient client);
+        Task ExecuteAsync(string argument, PlayerSession session);
     }
 
     public class SayCommand : ICommand
     {
         public string Name => "say";
 
-        public async Task ExecuteAsync(string argument, TcpClient client)
+        public async Task ExecuteAsync(string argument, PlayerSession session)
         {
             // Implement the logic for the "say" command here.
         }
@@ -28,7 +28,7 @@ namespace AvendyrServer
     {
         public string Name => "quit";
 
-        public async Task ExecuteAsync(string argument, TcpClient client)
+        public async Task ExecuteAsync(string argument, PlayerSession session)
         {
             // Implement the logic for the "quit" command here.
         }

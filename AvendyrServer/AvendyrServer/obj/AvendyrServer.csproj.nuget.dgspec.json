@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\cardi\\OneDrive\\Documents\\AvendyrMUD\\AvendyrServer\\AvendyrServer\\AvendyrServer.csproj": {}
+    "C:\\Users\\cardi\\Desktop\\AvendyrMUD\\AvendyrServer\\AvendyrServer\\AvendyrServer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\cardi\\OneDrive\\Documents\\AvendyrMUD\\AvendyrServer\\AvendyrServer\\AvendyrServer.csproj": {
+    "C:\\Users\\cardi\\Desktop\\AvendyrMUD\\AvendyrServer\\AvendyrServer\\AvendyrServer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\cardi\\OneDrive\\Documents\\AvendyrMUD\\AvendyrServer\\AvendyrServer\\AvendyrServer.csproj",
+        "projectUniqueName": "C:\\Users\\cardi\\Desktop\\AvendyrMUD\\AvendyrServer\\AvendyrServer\\AvendyrServer.csproj",
         "projectName": "AvendyrServer",
-        "projectPath": "C:\\Users\\cardi\\OneDrive\\Documents\\AvendyrMUD\\AvendyrServer\\AvendyrServer\\AvendyrServer.csproj",
+        "projectPath": "C:\\Users\\cardi\\Desktop\\AvendyrMUD\\AvendyrServer\\AvendyrServer\\AvendyrServer.csproj",
         "packagesPath": "C:\\Users\\cardi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\cardi\\OneDrive\\Documents\\AvendyrMUD\\AvendyrServer\\AvendyrServer\\obj\\",
+        "outputPath": "C:\\Users\\cardi\\Desktop\\AvendyrMUD\\AvendyrServer\\AvendyrServer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\cardi\\AppData\\Roaming\\NuGet\\NuGet.Config",
