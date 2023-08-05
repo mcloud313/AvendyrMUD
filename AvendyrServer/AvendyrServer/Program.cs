@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AvendyrServer;
+using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -30,7 +31,7 @@ class Program
     static async void HandleClientAsync(TcpClient client)
     {
         var bytes = new byte[256];
-        Console.WriteLine("Connected!");
+        Console.WriteLine("Connected");
 
         var stream = client.GetStream();
 
@@ -38,16 +39,30 @@ class Program
 
         while ((i = await stream.ReadAsync(bytes, 0, bytes.Length)) != 0)
         {
-            // Translate data bytes to an ASCII string and print it
+
+            //Translate data bytes to an ASCII string and print it. 
             var data = Encoding.ASCII.GetString(bytes, 0, i);
             Console.WriteLine($"Received: {data}");
 
-            // Process the data sent by the client and send back a response
+
+            string commandName = data.Split(' ')[0].ToLower(); //First word is the command name 
+            string argument = string.Join(' ', data.Split(' ').Skip(i)); //Rest of the string is the argument
+
+            var commandRegistry = new CommandRegistry();
+            if (commandRegistry.Commands.TryGetValue(commandName, out var commandHandler)) 
+            {
+                await commandHandler.ExecuteAsync(argument, client);
+            } else
+            {
+                // Handle unknown command.
+            }
+
+            //Process the data sent by the client and send back a response 
             data = data.ToUpper();
 
             var msg = Encoding.ASCII.GetBytes(data);
 
-            // Send back a response.
+            //Send back a response 
             await stream.WriteAsync(msg, 0, msg.Length);
             Console.WriteLine($"Sent: {data}");
         }
